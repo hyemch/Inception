@@ -56,11 +56,13 @@ doker compose를 사용해야 한다.
 ℹ️ Docker 컨테이너는 가상머신이 아니다. 따라서 이를 실행하려고 할 때 ‘talil -f’등을 기반으로 하는 해킹 패치를 사용하지 않는 것이 좋다. 데몬의 작동 방식과 데몬을 사용하는 것이 좋은지 아닌지에 대해 읽어보자.
 
 </aside>
+
 <aside>
 ❗ 물론, network: host or link or links: 사용은 금지되어 있다. 네트워크 라인은 반드시 docker-compose.yml file에 있어야 한다. 컨테이너는 무한 루프를 실행하는 명령으로 시작해서는 안된다. 따라서 이는 entrypoint script로 사용되거나 entrypoint script로 사용되는 모든 명령에 적용된다. 
-몇다음은 몇가지 금지된 해커 패치이다: tail -f, bash, sleep, infinity, while true
+몇다음은 몇가지 금지된 해커 패치이다: tail -f, bash, sleep, infinity, while true.
 
 </aside>
+<aside>
 
 <aside>
 ℹ️ Read about PID 1 and the best practices for writing Dockerfiles.
@@ -90,7 +92,7 @@ NGINX 컨테이너는 포트 443을 통해서만 infrastructure로 들어가는 
 
 - 다음은 예상 결과를 보여주는 예시 다이어그램이다.
 
-![스크린샷 2024-01-01 오후 10.10.15.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/969d3a9e-6112-4b99-a4bb-b6e48dbc2d34/2e3b3e06-ae48-4ab0-b380-92891c22d61f/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-01-01_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_10.10.15.png)
+- 이미지. 
 
 - 다음은 예상되는 디렉터리 구조의 예시:
 
