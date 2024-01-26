@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD="XXXXXXXXXXXX"
+      - MYSQL_USER="XXXXXXXXXXXX"
+      - MYSQL_PASSWORD="XXXXXXXXXXXX"
+    networks:
+      - hyecheon-network
+    restart: always
+
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    depends_on:
+      - mariadb
+    expose:
+      - "9000"
+    restart: always
+
+  nginx:
+    container_name: nginx
+    depends_on:
+      - wordpress
+    image: nginx
+    ports:
+      - "443:443"
+    restart: always
+
+volumes:
+  db-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: 절대경로 + 존재하는 폴더
+  wp-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: 절대경로 + 존재하는 폴더
+
+networks:
+  hyecheon-network:
+    driver: bridge
