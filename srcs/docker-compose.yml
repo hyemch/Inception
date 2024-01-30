@@ -2,35 +2,56 @@ version: "3"
 
 services:
   mariadb:
-    container_name: mariadb
     image: mariadb
+    container_name: mariadb
     expose:
       - "3306"
+#    build:
+#      context: ./requirements/mariadb/Dockerfile
     environment:
       - MYSQL_ROOT_PASSWORD="XXXXXXXXXXXX"
       - MYSQL_USER="XXXXXXXXXXXX"
       - MYSQL_PASSWORD="XXXXXXXXXXXX"
-    networks:
-      - hyecheon-network
+#      - MYSQL_DATABASE="xxxxxxxxxx"
+    volumes:
+      - db-volume:/home
+#    networks:
+#      - hyecheon-network
     restart: always
 
   wordpress:
-    container_name: wordpress
     image: wordpress
+    container_name: wordpress
+#    build:
+#      context: ./requirements/wordpress/Dockerfile
     depends_on:
       - mariadb
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: example_user
+      WRODPRESS_DB_PASSWORD: example_password
+    volumes:
+      - wp-volume:/home
     expose:
       - "9000"
+#    networks:
+#      - hyecheon-network
     restart: always
 
   nginx:
+    image: nginx
     container_name: nginx
     depends_on:
       - wordpress
-    image: nginx
     ports:
       - "443:443"
+    networks:
+      - hyecheon-network
+    volumes:
+      - wp-volume:/home
     restart: always
+#    build:
+#      context: ./requirements/nginx/Dockerfile
 
 volumes:
   db-volume:
@@ -38,13 +59,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: 절대경로 + 존재하는 폴더
+      device: /Users/min/Desktop/code/42cursus/inception/dbvolume
   wp-volume:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: 절대경로 + 존재하는 폴더
+      device: /Users/min/Desktop/code/42cursus/inception/wpvolume
 
 networks:
   hyecheon-network:
