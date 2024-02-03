@@ -39,7 +39,7 @@ services:
     restart: always
 
   nginx:
-    image: nginx
+    image: nginx:alpine3.18
     container_name: nginx
     depends_on:
       - wordpress
