@@ -59,13 +59,16 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/hyecheon/dbvolume
+#      device: /Users/hyecheon/dbvolume
+      device: /Users/min/Desktop/code/42cursus/inception/dbvolume
+
   wp-volume:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/hyecheon/wpvolume
+#      device: /Users/hyecheon/wpvolume
+      device: /Users/min/Desktop/code/42cursus/inception/wpvolume
 
 networks:
   hyecheon-network:
