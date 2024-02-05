@@ -2,7 +2,7 @@ version: "3"
 
 services:
   mariadb:
-    image: mariadb
+    image: mariadb:10
     container_name: mariadb
     expose:
       - "3306"
@@ -12,10 +12,10 @@ services:
 #      context: ./requirements/mariadb/Dockerfile
     env_file: .env
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+     - MYSQL_USER=${MYSQL_USER}
+     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+     - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
       - db-volume:/home
     restart: always
