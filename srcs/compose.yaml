@@ -2,7 +2,7 @@ version: "3"
 
 services:
   mariadb:
-    image: mariadb:10
+    image: alpinelinux/mariadb:latest
     container_name: mariadb
     expose:
       - "3306"
@@ -21,7 +21,7 @@ services:
     restart: always
 
   wordpress:
-    image: wordpress
+    image: wordpress:6.4.3-fpm-alpine
     container_name: wordpress
 #    build:
 #      context: ./requirements/wordpress/Dockerfile
