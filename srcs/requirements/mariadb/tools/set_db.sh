@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
 if [ -d "/run/mysqld" ]; then
     chown -R mysql:mysql /run/mysqld
@@ -18,13 +18,12 @@ FLUSH PRIVILEGES;
 DROP DATABASE test;
 DELETE FROM mysql.db WHERE Db='test';
 DELETE FORM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
-ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';
-CREATE DATABASE ${DB_NAME} CHARACTER SET utf8 COLLATE utf8_general_ci;
-CREATE USER '${DB_USER}'@'%' IDENTIFIED by '${DB_PASSWORD}';
-GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}';
+CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE} CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED by '${MYSQL_PASSWORD}';
+GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF
-
   /usr/bin/mysqld --user=mysql --bootstrap < /tmp/create_db.sql
           rm -f /tmp/create_db.sql
 fi
