@@ -2,8 +2,11 @@ version: "3"
 
 services:
   mariadb:
-    image: alpinelinux/mariadb:latest
+#    image: alpinelinux/mariadb:latest
     container_name: mariadb
+    image: mariadb
+    pull_policy: never
+    build: ./requirements/mariadb/
     expose:
       - "3306"
     networks:
@@ -42,19 +45,19 @@ services:
     restart: always
 
   nginx:
-    image: nginx:alpine3.18
     container_name: nginx
     depends_on:
       - wordpress
+    image: nginx
+    pull_policy: never
+    build: ./requirements/nginx
     ports:
       - "443:443"
     networks:
       - hyecheon-network
     volumes:
-      - wp-volume:/home
+      - wp-volume:/var/www/html
     restart: always
-#    build:
-#      context: ./requirements/nginx/Dockerfile
 
 volumes:
   db-volume:
