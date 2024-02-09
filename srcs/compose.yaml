@@ -2,17 +2,20 @@ version: "3"
 
 services:
   mariadb:
-#    image: alpinelinux/mariadb:latest
     container_name: mariadb
     image: mariadb
     pull_policy: never
-    build: ./requirements/mariadb/
+    build:
+      context: ./requirements/mariadb/
+      args:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
     expose:
       - "3306"
     networks:
       - hyecheon-network
-#    build:
-#      context: ./requirements/mariadb/Dockerfile
     env_file: .env
     environment:
      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -20,7 +23,7 @@ services:
      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
      - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
-      - db-volume:/home
+      - db-volume:/var/lib/mysql
     restart: always
 
   wordpress:
@@ -46,12 +49,11 @@ services:
         WORDPRESS_USER_EMAIL: ${WORDPRESS_USER_EMAIL}
     depends_on:
       - mariadb
-
-#    environment:
-#      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}:3306
-#      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-#      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-#      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}:3306
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
     volumes:
       - wp-volume:/var/www/html
     expose:

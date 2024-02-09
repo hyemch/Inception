@@ -14,7 +14,6 @@ wp core install --allow-root \
 wp user create ${WORDPRESS_USER} ${WORDPRESS_USER_EMAIL} \
 --user_pass=${WORDPRESS_USER_PASSWORD} \
 --role=author \
---allow-root && \
+--allow-root
 
 chmod -R 777 /var/www/html/wp-content
-

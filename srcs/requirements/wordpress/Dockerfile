@@ -1,28 +1,6 @@
 # syntax=docker/dockerfile:1
 
-
 FROM alpine:3.18
-
-RUN apk update &&\
-    apk --no-cache add php \
-    php-fpm \
-    php-phar \
-    php-curl \
-    php-mysqli \
-    php-mbstring \
-    dumb-init
-
-RUN sed -i "s|listen = 127.0.0.1:9000|listen = 0.0.0.0:9000|g" /etc/php81/php-fpm.d/www.conf
-
-WORKDIR /var/www/html
-
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
-    php wp-cli.phar && \
-    chmod +x wp-cli.phar && \
-    mv wp-cli.phar /usr/local/bin/wp
-
-COPY ./conf/set-wp-config.sh /home/set-wp-config.sh
-COPY ./tools/install-wp.sh /home/install-wp.sh
 
 ARG MYSQL_USER
 ARG MYSQL_PASSWORD
@@ -52,6 +30,29 @@ ENV WORDPRESS_USER=${WORDPRESS_USER}
 ENV WORDPRESS_USER_PASSWORD=${WORDPRESS_USER_PASSWORD}
 ENV WORDPRESS_USER_EMAIL=${WORDPRESS_USER_EMAIL}
 
+RUN apk update &&\
+    apk --no-cache add php \
+    php-fpm \
+    php-phar \
+    php-curl \
+    php-mysqli \
+    php-mbstring \
+    dumb-init
+
+RUN sed -i "s|listen = 127.0.0.1:9000|listen = 0.0.0.0:9000|g" /etc/php81/php-fpm.d/www.conf
+
+WORKDIR /var/www/html
+
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    php wp-cli.phar && \
+    chmod +x wp-cli.phar && \
+    mv wp-cli.phar /usr/local/bin/wp
+
+COPY ./conf/set-wp-config.sh /home/set-wp-config.sh
+COPY ./tools/install-wp.sh /home/install-wp.sh
+
+EXPOSE 9000
+
 RUN chmod 777 /home/set-wp-config.sh && \
     chmod 777 /home/install-wp.sh
 
@@ -59,6 +60,5 @@ RUN /home/set-wp-config.sh && \
     /home/install-wp.sh
 
 
-EXPOSE 9000
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--", "/usr/sbin/php-fpm81", "-F"]
