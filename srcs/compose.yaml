@@ -24,18 +24,34 @@ services:
     restart: always
 
   wordpress:
-    image: wordpress:6.4.3-fpm-alpine
     container_name: wordpress
-#    build:
-#      context: ./requirements/wordpress/Dockerfile
+    image: wordpress
+    pull_policy: never
+    env_file: .env
+    build:
+      context: ./requirements/wordpress/
+      args:
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        WORDPRESS_PATH: ${WORDPRESS_PATH}
+        WORDPRESS_TITLE: ${WORDPRESS_TITLE}
+        WORDPRESS_URL: ${WORDPRESS_URL}
+        WORDPRESS_WWW: ${WORDPRESS_WWW}
+        WORDPRESS_ADMIN_USER: ${WORDPRESS_ADMIN_USER}
+        WORDPRESS_ADMIN_PASSWORD: ${WORDPRESS_ADMIN_PASSWORD}
+        WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
+        WORDPRESS_USER: ${WORDPRESS_USER}
+        WORDPRESS_USER_PASSWORD: ${WORDPRESS_USER_PASSWORD}
+        WORDPRESS_USER_EMAIL: ${WORDPRESS_USER_EMAIL}
     depends_on:
       - mariadb
-    env_file: .env
-    environment:
-      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}:3306
-      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+
+#    environment:
+#      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}:3306
+#      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+#      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+#      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
     volumes:
       - wp-volume:/var/www/html
     expose:
