@@ -30,5 +30,5 @@ EOF
           rm -f /tmp/create_db.sql
 fi
 
-#exec /usr/bin/mysqld --user=mysql --skip-log-error
-mysql -u mysql
+exec /usr/bin/mysqld --user=mysql --skip-log-error
+#mysql -u mysql

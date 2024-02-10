@@ -50,7 +50,7 @@ services:
     depends_on:
       - mariadb
     environment:
-      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}:3306
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
       WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
       WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
@@ -68,7 +68,7 @@ services:
       - wordpress
     image: nginx
     pull_policy: never
-    build: ./requirements/nginx
+    build: ./requirements/nginx/
     ports:
       - "443:443"
     networks:
@@ -83,16 +83,16 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/hyecheon/dbvolume
-#      device: /Users/min/Desktop/code/42cursus/inception/srcs/dbvolume
+#      device: /Users/hyecheon/dbvolume
+      device: /Users/min/Desktop/code/42cursus/inception/srcs/dbvolume
 
   wp-volume:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/hyecheon/wpvolume
-#      device: /Users/min/Desktop/code/42cursus/inception/srcs/wpvolume
+#      device: /Users/hyecheon/wpvolume
+      device: /Users/min/Desktop/code/42cursus/inception/srcs/wpvolume
 
 networks:
   hyecheon-network:

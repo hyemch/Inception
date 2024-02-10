@@ -1,6 +1,5 @@
-#!/bin/sh
+# !/bin/sh
 
-if [ ! -f /var/www/html/wp-config.php ]; then
 cat << EOF > /var/www/html/wp-config.php
 <?php
 define('DB_NAME', '${MYSQL_DATABASE}');
@@ -11,14 +10,8 @@ define('DB_CHARSET', "utf8");
 define( 'DB_COLLATE', '' );
 define('FS_METHOD','direct');
 \$table_prefix = 'wp_';
-define( 'WP_DEBUG', true );
 if ( ! defined( 'ABSPATH' ) ) {
 define( 'ABSPATH', __DIR__ . '/' );}
 require_once ABSPATH . 'wp-settings.php';
 ?>
-
 EOF
-fi
-
-echo "[wp-config.php log]"
-cat /var/www/html/wp-config.php

@@ -30,7 +30,7 @@ ENV WORDPRESS_USER=${WORDPRESS_USER}
 ENV WORDPRESS_USER_PASSWORD=${WORDPRESS_USER_PASSWORD}
 ENV WORDPRESS_USER_EMAIL=${WORDPRESS_USER_EMAIL}
 
-RUN apk update &&\
+RUN apk update && \
     apk --no-cache add php \
     php-fpm \
     php-phar \
@@ -39,9 +39,11 @@ RUN apk update &&\
     php-mbstring \
     dumb-init
 
-RUN sed -i "s|listen = 127.0.0.1:9000|listen = 0.0.0.0:9000|g" /etc/php81/php-fpm.d/www.conf
+RUN sed -i "s|listen = 127.0.0.1:9000|listen = 0.0.0.0:9000|g" /etc/php81/php-fpm.d/www.conf && \
+    mkdir -p /var/www/html &&\
+    chmod 777 /var/www/html
 
-WORKDIR /var/www/html
+WORKDIR /home
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     php wp-cli.phar && \
@@ -49,16 +51,11 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
     mv wp-cli.phar /usr/local/bin/wp
 
 COPY ./conf/set-wp-config.sh /home/set-wp-config.sh
-COPY ./tools/install-wp.sh /home/install-wp.sh
+COPY ./tools/wp-script.sh /home/wp-script.sh
 
 EXPOSE 9000
 
 RUN chmod 777 /home/set-wp-config.sh && \
-    chmod 777 /home/install-wp.sh
+    chmod 777 /home/wp-script.sh
 
-RUN /home/set-wp-config.sh && \
-    /home/install-wp.sh
-
-
-
-ENTRYPOINT ["/usr/bin/dumb-init", "--", "/usr/sbin/php-fpm81", "-F"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--", "/bin/sh", "wp-script.sh"]
