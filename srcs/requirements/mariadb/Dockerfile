@@ -2,14 +2,8 @@
 
 FROM alpine:3.18
 
-#ARG MYSQL_ROOT_PASSWORD
-#ARG MYSQL_USER
-#ARG MYSQL_PASSWORD
-#ARG MYSQL_DATABASE
-
 # 설치
-RUN apk update && apk add --no-cache mysql \
-	mysql-client \
+RUN apk update && apk add --no-cache mysql mysql-client \
 	dumb-init
 
 # 설정 적용

@@ -5,13 +5,7 @@ services:
     container_name: mariadb
     image: mariadb
     pull_policy: never
-    build:
-      context: ./requirements/mariadb/
-      args:
-        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-        MYSQL_USER: ${MYSQL_USER}
-        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-        MYSQL_DATABASE: ${MYSQL_DATABASE}
+    build: ./requirements/mariadb/
     expose:
       - "3306"
     networks:
@@ -30,30 +24,15 @@ services:
     container_name: wordpress
     image: wordpress
     pull_policy: never
-    env_file: .env
-    build:
-      context: ./requirements/wordpress/
-      args:
-        MYSQL_USER: ${MYSQL_USER}
-        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-        MYSQL_DATABASE: ${MYSQL_DATABASE}
-        WORDPRESS_PATH: ${WORDPRESS_PATH}
-        WORDPRESS_TITLE: ${WORDPRESS_TITLE}
-        WORDPRESS_URL: ${WORDPRESS_URL}
-        WORDPRESS_WWW: ${WORDPRESS_WWW}
-        WORDPRESS_ADMIN_USER: ${WORDPRESS_ADMIN_USER}
-        WORDPRESS_ADMIN_PASSWORD: ${WORDPRESS_ADMIN_PASSWORD}
-        WORDPRESS_ADMIN_EMAIL: ${WORDPRESS_ADMIN_EMAIL}
-        WORDPRESS_USER: ${WORDPRESS_USER}
-        WORDPRESS_USER_PASSWORD: ${WORDPRESS_USER_PASSWORD}
-        WORDPRESS_USER_EMAIL: ${WORDPRESS_USER_EMAIL}
+    build: ./requirements/wordpress/
     depends_on:
       - mariadb
-    environment:
-      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
-      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
-      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
-      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+    env_file: .env
+#    environment:
+#      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+#      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+#      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+#      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
     volumes:
       - wp-volume:/var/www/html
     expose:

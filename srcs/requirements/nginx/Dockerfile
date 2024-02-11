@@ -14,8 +14,7 @@ RUN mkdir -p ${SSL_PATH} &&\
     -subj "/C=KR/ST=Seoul/L=Gaepodong/O=42seoul/OU=Cadet/CN=hyecheon.42.kr" && \
     openssl x509 -req -days 1000 -in ${SSL_PATH}/hyecheon.42.fr.crt -signkey ${SSL_PATH}/hyecheon.42.fr.key -out ${SSL_PATH}/hyecheon.42.fr.crt && \
     chown -R nginx ${SSL_PATH} &&\
-    mkdir -p /var/www/html &&\
-    chmod 755 /var/www/html
+    mkdir -p /var/www/html
 
 WORKDIR /var/www/html
 
