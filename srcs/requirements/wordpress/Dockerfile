@@ -2,6 +2,15 @@
 
 FROM alpine:3.18
 
+ARG MYSQL_USER
+ARG MYSQL_PASSWORD
+ARG MYSQL_DATABASE
+
+ARG MYSQL_USER=$MYSQL_USER
+ARG MYSQL_PASSWORD=$MYSQL_PASSWORD
+ARG MYSQL_DATABASE=$MYSQL_DATABASE
+
+
 RUN apk update && \
     apk --no-cache add php \
     php-fpm \
@@ -29,5 +38,7 @@ EXPOSE 9000
 
 RUN chmod 777 /home/set-wp-config.sh && \
     chmod 777 /home/wp-script.sh
+
+RUN /bin/sh /home/set-wp-config.sh
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--", "/bin/sh", "/home/wp-script.sh"]

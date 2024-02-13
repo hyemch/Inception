@@ -1,8 +1,8 @@
-# !/bin/sh
+#!/bin/sh
 
 if [ ! -f "/var/www/html/wp-config.php" ]; then
 
-/home/set-wp-config.sh
+mv /home/wp-config.php /var/www/html/wp-config.php
 
 wp core download --locale=ko_KR --allow-root --path=${WORDPRESS_PATH}
 

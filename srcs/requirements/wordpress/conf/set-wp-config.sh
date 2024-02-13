@@ -1,6 +1,6 @@
-# !/bin/sh
+#!/bin/sh
 
-cat << EOF > /var/www/html/wp-config.php
+cat << EOF > /home/wp-config.php
 <?php
 define('DB_NAME', '${MYSQL_DATABASE}');
 define('DB_USER', '${MYSQL_USER}');

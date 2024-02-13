@@ -24,7 +24,12 @@ services:
     container_name: wordpress
     image: wordpress
     pull_policy: never
-    build: ./requirements/wordpress/
+    build:
+      context: ./requirements/wordpress/
+      args:
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
     depends_on:
       - mariadb
     env_file: .env
