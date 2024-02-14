@@ -1,12 +1,5 @@
 #!/bin/sh
 
-#if [ -d "/run/mysqld" ]; then
-#    chown -R mysql:mysql /run/mysqld
-#else
-#    mkdir -p /run/mysqld
-#    chown -R mysql:mysqld /run/mysqld
-#fi
-
 if [ ! -d "/var/lib/mysql/mysql" ]; then
   chown -R mysql:mysql /var/lib/mysql
   mysql_install_db --datadir=/var/lib/mysql --user=mysql
@@ -31,4 +24,3 @@ EOF
 fi
 
 exec /usr/bin/mysqld --user=mysql --skip-log-error
-#mysql -u mysql
