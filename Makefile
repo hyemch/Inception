@@ -14,7 +14,6 @@ all:
 	docker compose -f srcs/compose.yaml build --no-cache
 	docker compose -f srcs/compose.yaml up -d
 
-
 up:
 	docker compose -f srcs/compose.yaml up -d
 
