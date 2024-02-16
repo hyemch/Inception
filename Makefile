@@ -1,7 +1,5 @@
 DBVOL = /home/hyecheon/data/dbvolume
 WPVOL = /home/hyecheon/data/wpvolume
-#DBVOL = /Users/hyecheon/dbvolume
-#WPVOL = /Users/hyecheon/wpvolume
 ID := $(shell docker ps -aq)
 IMAGE := $(shell docker images -q)
 VOLUME := $(shell docker volume ls -q)
