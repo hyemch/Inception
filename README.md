@@ -5,11 +5,6 @@
 
 </aside>
 
-- PDF
-    
-    https://cdn.intra.42.fr/pdf/pdf/115394/en.subject.pdf
-    
-
 이 프로젝트는 Docker를 사용하여 시스템 관리에 대한 지식을 넓히는 것을 목표로 한다. 여러개의 Docker 이미지를 가상화하여 새로운 가상 머신에 생성한다.
 
 (도커 이미지란? Docker에서 사용할  파일)
@@ -53,27 +48,34 @@ doker compose를 사용해야 한다.
 - 충돌이 발생하면 컴테이너를 다시 시작해야 한다.
 
 <aside>
-ℹ️ Docker 컨테이너는 가상머신이 아니다. 따라서 이를 실행하려고 할 때 ‘talil -f’등을 기반으로 하는 해킹 패치를 사용하지 않는 것이 좋다. 데몬의 작동 방식과 데몬을 사용하는 것이 좋은지 아닌지에 대해 읽어보자.
+    
+    ℹ️ Docker 컨테이너는 가상머신이 아니다. 따라서 이를 실행하려고 할 때 ‘talil -f’등을 기반으로 하는 해키 패치를 사용하지 않는 것이 좋다.
+    데몬의 작동 방식과 데몬을 사용하는 것이 좋은지 아닌지에 대해 읽어보자.
 
 </aside>
 
 <aside>
-❗ 물론, network: host or link or links: 사용은 금지되어 있다. 네트워크 라인은 반드시 docker-compose.yml file에 있어야 한다. 컨테이너는 무한 루프를 실행하는 명령으로 시작해서는 안된다. 따라서 이는 entrypoint script로 사용되거나 entrypoint script로 사용되는 모든 명령에 적용된다. 
-몇다음은 몇가지 금지된 해커 패치이다: tail -f, bash, sleep, infinity, while true.
+    ❗ 물론, network: host or link or links: 사용은 금지되어 있다.
+    네트워크 라인은 반드시 docker-compose.yml file에 있어야 한다. 컨테이너는 무한 루프를 실행하는 명령으로 시작해서는 안된다. 
+    따라서 이는 entrypoint script로 사용되거나 entrypoint script로 사용되는 모든 명령에 적용된다. 
+    
+    몇다음은 몇가지 금지된 해커 패치이다: tail -f, bash, sleep, infinity, while true.
 
 </aside>
-<aside>
+
 
 <aside>
-ℹ️ Read about PID 1 and the best practices for writing Dockerfiles.
+    
+    ℹ️ Read about PID 1 and the best practices for writing Dockerfiles.
 
 </aside>
 
 - WordPress database에는, 두 명의 사용자가 있어야 하며 그 중 한 명은 adminstrator여야한다. 관리자의 username에는 admin/Admin or administrator/Administrator 를 포함할 수 없다. (e.g., admin, adminstrator, Administrator, admin-123 등).
 
 <aside>
-ℹ️ Volumes은 도커를 사용하는 host machine의 /home/login/data 폴더에서 사용할 수 있다.
-물론, 로그인 정보를 사용자 이름으로 바꿔야 한다.
+    
+    ℹ️ Volumes은 도커를 사용하는 host machine의 /home/login/data 폴더에서 사용할 수 있다.
+    물론, 로그인 정보를 사용자 이름으로 바꿔야 한다.
 
 </aside>
 
@@ -82,17 +84,15 @@ doker compose를 사용해야 한다.
 - 예를 들어 아이디가 wil 인 경우 wil.42.fr은 wil의 웹사이트를 가리키는 IP address로 redirect된다.
 
 <aside>
-❗ 최신 태그는 금지된다.
-Docker 파일에 비밀번호가 없어아 햔다.
-환경 변수는 반드시 사용해야 한다. 또한, 환경 변수를 저장하는 데 .env 파일을 사용할 것을 강력히 권장한다.
-.env 파일은 srcs 디렉터리의 루트에 위치해야 한다. 
-NGINX 컨테이너는 포트 443을 통해서만 infrastructure로 들어가는 유일한 진입점이어야 하며, TLSv1.2 또는 TLSv1.3 프로토콜을 사용해야 한다.
+    
+    ❗ 최신 태그는 금지된다.
+    Docker 파일에 비밀번호가 없어아 햔다.
+    환경 변수는 반드시 사용해야 한다. 또한, 환경 변수를 저장하는 데 .env 파일을 사용할 것을 강력히 권장한다.
+    .env 파일은 srcs 디렉터리의 루트에 위치해야 한다. 
+    NGINX 컨테이너는 포트 443을 통해서만 infrastructure로 들어가는 유일한 진입점이어야 하며, TLSv1.2 또는 TLSv1.3 프로토콜을 사용해야 한다.
 
 </aside>
 
-- 다음은 예상 결과를 보여주는 예시 다이어그램이다.
-
-- 이미지. 
 
 - 다음은 예상되는 디렉터리 구조의 예시:
 
@@ -152,7 +152,10 @@ MYSQL_PASSWORD=XXXXXXXXXXXX
 $>
 ```
 
+
 <aside>
-❗ 명백한 보안상의 이유로 모든 자격 증명(and credentials), API keys, 환경 변수 등은 .env 파일에 로컬로 저장해야하며 git에서는 무시해야 한다. public으로 저장된 자격 증명을 사용하면 바로 프로잭트 failure.
+
+    ❗ 명백한 보안상의 이유로 모든 자격 증명(and credentials), API keys, 환경 변수 등은 .env 파일에 로컬로 저장해야하며 git에서는 무시해야 한다. 
+    public으로 저장된 자격 증명을 사용하면 바로 프로젝트 failure.
 
 </aside>
